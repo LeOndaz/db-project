@@ -1,7 +1,7 @@
 from .base import Base
 from .branch import Branch
-from .insurance import ProductInsurance, Insurance
-from .inventory import InventoryProduct, Inventory
+from .customer import Customer, CustomerInsurance
+from .insurance import Insurance, ProductInsurance
+from .inventory import Inventory, InventoryProduct
 from .order import Order, OrderLine
 from .product import Product
-from .customer import Customer, CustomerInsurance
