@@ -1,3 +1,4 @@
+import phonenumbers
 from functools import partial
 from typing import Type, Union
 
@@ -38,7 +39,7 @@ def get_db_entity_by_id(db: Session, entity_klass, id):
 
 
 def delete_by_entity_by_id(
-    db: Session, entity_klass, schema_class: Type[BaseModel], id
+        db: Session, entity_klass, schema_class: Type[BaseModel], id
 ):
     instance = get_object_or_404(db, entity_klass, "id", id)
 
@@ -65,11 +66,11 @@ def map_from_orm(schema_klass: Type[BaseModel], db_entities):
 
 
 def update_db_entity(
-    db: Session,
-    entity_klass: Type[models.Base],
-    pk_value: Union[str, int],
-    data: BaseModel,
-    pk_field: str = "id",
+        db: Session,
+        entity_klass: Type[models.Base],
+        pk_value: Union[str, int],
+        data: BaseModel,
+        pk_field: str = "id",
 ):
     def mapper(item):
         return item.name
@@ -90,3 +91,16 @@ def update_db_entity(
     db.refresh(instance)
 
     return instance
+
+
+def validate_phone_number(phone_number: str):
+    error_msg = "Invalid phone_number provided"
+
+    try:
+        obj = phonenumbers.parse(phone_number, None)
+        if phonenumbers.is_valid_number(obj):
+            return phone_number
+
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=error_msg)
+    except phonenumbers.phonenumberutil.NumberParseException as e:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=error_msg)
