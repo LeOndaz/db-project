@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 
 from db import engine
 from models import Base
@@ -10,6 +10,7 @@ from routers import (
     order_router,
     product_router,
 )
+from utils.fixtures import setup_db_data
 
 Base.metadata.create_all(engine)
 
@@ -24,3 +25,5 @@ for router in [
     insurance_router,
 ]:
     app.include_router(router)
+
+setup_db_data()
