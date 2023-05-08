@@ -13,6 +13,10 @@ from routers import (
 )
 from utils.fixtures import setup_db_data
 
+
+# remove existing db.sqlite3 & re-init on each server run
+Path('db.sqlite3').unlink(missing_ok=True)
+
 Base.metadata.create_all(engine)
 
 app = FastAPI()
@@ -28,6 +32,4 @@ for router in [
     app.include_router(router)
 
 
-# remove existing db.sqlite3 & re-init on each server run
-Path('db.sqlite3').unlink(missing_ok=True)
 setup_db_data()
