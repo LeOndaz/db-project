@@ -58,7 +58,7 @@ def setup_db_data():
             db.commit()
 
             inventory = Inventory(
-                name=f"inv#{inventory.id}",
+                name=f"inv#{i}",
                 barcode=fake.ean(),
                 branch_id=branch.id
             )
