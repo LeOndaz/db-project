@@ -1,3 +1,4 @@
+from pathlib import Path
 from fastapi import FastAPI
 
 from db import engine
@@ -26,4 +27,7 @@ for router in [
 ]:
     app.include_router(router)
 
+
+# remove existing db.sqlite3 & re-init on each server run
+Path('db.sqlite3').unlink(missing_ok=True)
 setup_db_data()

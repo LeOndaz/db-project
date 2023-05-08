@@ -26,9 +26,9 @@ class Order(Base):
         total = 0
 
         for line in self.lines:
-            print(line)
+            total += line.product.price
 
-        return 0
+        return total
 
 
 class OrderLine(Base):

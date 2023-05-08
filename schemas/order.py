@@ -27,7 +27,6 @@ class OrderLineCreate(BaseModel):
 class OrderCreate(BaseModel):
     branch_id: int
     customer_id: int
-    insurance_id: int
     lines: List[OrderLineCreate]
 
 

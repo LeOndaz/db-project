@@ -28,10 +28,8 @@ def delete_order(db: Session, id) -> models.Order:
 def create_order(db: Session, data: schemas.OrderCreate) -> models.Order:
     branch = get_object_or_404(db, models.Branch, "id", data.branch_id)
     customer = get_object_or_404(db, models.Customer, "id", data.customer_id)
-    insurance = get_object_or_404(db, models.Customer, "id", data.insurance_id)
 
-    order = models.Order(branch=branch, customer=customer, insurance=insurance)
-
+    order = models.Order(branch=branch, customer=customer)
     db.add(order)
     db.commit()
 
