@@ -18,7 +18,6 @@ from routers import (
 from utils.auth import init_admin
 
 Base.metadata.create_all(engine)
-init_admin()
 
 middleware = [Middleware(AuthenticationMiddleware, backend=JWTBackend())]
 
@@ -35,3 +34,7 @@ for router in [
     auth_router,
 ]:
     app.include_router(router)
+
+
+if __name__ == "__main__":
+    init_admin()

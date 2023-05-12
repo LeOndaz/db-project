@@ -18,18 +18,6 @@ from schemas.auth import TokenCreate
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-def init_admin():
-    db = next(get_db())
-    user = models.User(
-        username=ADMIN_USERNAME,
-        email="admin@admin.com",
-        is_staff=True,
-    )
-    user.password = hash_password(ADMIN_PASSWORD)
-    db.add(user)
-    db.commit()
-
-
 def check_password(pwd, hashed_pwd):
     return pwd_context.verify(pwd, hashed_pwd)
 
@@ -67,3 +55,15 @@ def create_jwt(user: TokenCreate, duration=timedelta(minutes=ACCESS_TOKEN_AGE_MI
 
 def decode_jwt(token):
     return jwt.decode(token, SECRET_KEY, JWT_ALGORITHM)
+
+
+def init_admin():
+    db = next(get_db())
+    user = models.User(
+        username=ADMIN_USERNAME,
+        email="admin@admin.com",
+        is_staff=True,
+    )
+    user.password = hash_password(ADMIN_PASSWORD)
+    db.add(user)
+    db.commit()
