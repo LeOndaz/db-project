@@ -33,21 +33,29 @@ def get_inventory_by_id(id: int, db: Session = Depends(get_db)) -> schemas.Inven
 @router.put("/{id}")
 @requires(["authenticated"])
 def update_inventory_by_id(
-    request: Request, id: int, data: schemas.InventoryUpdate, db: Session = Depends(get_db)
+    request: Request,
+    id: int,
+    data: schemas.InventoryUpdate,
+    db: Session = Depends(get_db),
 ) -> schemas.Inventory:
     return inventory_controllers.update_inventory_by_id(db, id, data)
 
 
 @router.delete("/{id}")
 @requires(["authenticated"])
-def delete_inventory_by_id(request: Request, id: int, db: Session = Depends(get_db)) -> schemas.Inventory:
+def delete_inventory_by_id(
+    request: Request, id: int, db: Session = Depends(get_db)
+) -> schemas.Inventory:
     return inventory_controllers.delete_inventory(db, id)
 
 
 @router.put("/{id}/remove-product")
 @requires(["authenticated"])
 def remove_product_from_inventory(
-    request: Request, id: int, data: schemas.RemoveProductFromInventory, db: Session = Depends(get_db)
+    request: Request,
+    id: int,
+    data: schemas.RemoveProductFromInventory,
+    db: Session = Depends(get_db),
 ) -> schemas.Inventory:
     return inventory_controllers.remove_product_from_inventory(db, id, data.product_id)
 
@@ -55,6 +63,9 @@ def remove_product_from_inventory(
 @router.put("/{id}/add-product")
 @requires(["authenticated"])
 def add_product_to_inventory(
-    request: Request, id: int, data: schemas.AddProductToInventory, db: Session = Depends(get_db)
+    request: Request,
+    id: int,
+    data: schemas.AddProductToInventory,
+    db: Session = Depends(get_db),
 ) -> schemas.Inventory:
     return inventory_controllers.add_product_to_inventory(db, id, data)

@@ -33,12 +33,17 @@ def get_insurance_by_id(id: int, db: Session = Depends(get_db)) -> schemas.Insur
 @router.put("/{id}")
 @requires(["authenticated"])
 def update_order_by_id(
-    request: Request, id: int, data: schemas.InsuranceUpdate, db: Session = Depends(get_db)
+    request: Request,
+    id: int,
+    data: schemas.InsuranceUpdate,
+    db: Session = Depends(get_db),
 ) -> schemas.Insurance:
     return insurance_controllers.update_insurance_by_id(db, id, data)
 
 
 @router.delete("/{id}")
 @requires(["authenticated"])
-def delete_order_by_id(request: Request, id: int, db: Session = Depends(get_db)) -> schemas.Insurance:
+def delete_order_by_id(
+    request: Request, id: int, db: Session = Depends(get_db)
+) -> schemas.Insurance:
     return insurance_controllers.delete_insurance(db, id)
