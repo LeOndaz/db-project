@@ -8,10 +8,10 @@ from .insurance import (
     ProductRemoveInsurance,
 )
 from .inventory import (
+    AddProductToInventory,
     Inventory,
     InventoryCreate,
     InventoryUpdate,
-    AddProductToInventory,
     RemoveProductFromInventory,
 )
 from .order import Order, OrderCreate, OrderLine, OrderLineCreate, OrderUpdate

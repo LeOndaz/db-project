@@ -9,8 +9,8 @@ from utils import (
     delete_by_entity_by_id,
     get_db_entity_by_id,
     get_db_entity_list,
-    update_db_entity,
     get_object_or_404,
+    update_db_entity,
 )
 
 

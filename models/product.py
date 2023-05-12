@@ -2,7 +2,9 @@ from datetime import date
 
 from sqlalchemy import Column, Date, Enum, Integer, Numeric, String
 from sqlalchemy.orm import relationship
+
 from utils.enums import ProductType
+
 from .base import Base
 
 

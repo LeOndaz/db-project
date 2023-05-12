@@ -1,0 +1,8 @@
+import confik
+
+SECRET_KEY = confik.get("SECRET_KEY")
+
+JWT_ALGORITHM = confik.get("JWT_ALGORITHM", "HS256")
+ACCESS_TOKEN_AGE_MINUTES = confik.get("ACCESS_TOKEN_AGE_MINUTES", 15, cast=int)
+ADMIN_USERNAME = confik.get("ADMIN_USERNAME")
+ADMIN_PASSWORD = confik.get("ADMIN_PASSWORD")

@@ -1,7 +1,8 @@
-import phonenumbers
 from functools import partial
 from typing import Type, Union
 
+import phonenumbers
+import sqlalchemy.exc
 from fastapi import status
 from fastapi.exceptions import HTTPException
 from pydantic import BaseModel
@@ -12,9 +13,11 @@ import models
 
 
 def get_object_or_404(db: Session, entity_klass, field, value):
-    instance = db.get(entity_klass, {field: value})
-
-    if instance is None:
+    try:
+        instance = (
+            db.query(entity_klass).filter(getattr(entity_klass, field) == value).one()
+        )
+    except sqlalchemy.exc.NoResultFound:
         raise HTTPException(
             detail="{object} with {field}={value} does not exist".format(
                 object=entity_klass.__name__, field=field, value=value
@@ -35,11 +38,11 @@ def create_db_entity(db: Session, entity_klass, data: BaseModel):
 
 
 def get_db_entity_by_id(db: Session, entity_klass, id):
-    return db.get(entity_klass, id)
+    return get_object_or_404(db, entity_klass, "id", id)
 
 
 def delete_by_entity_by_id(
-        db: Session, entity_klass, schema_class: Type[BaseModel], id
+    db: Session, entity_klass, schema_class: Type[BaseModel], id
 ):
     instance = get_object_or_404(db, entity_klass, "id", id)
 
@@ -66,11 +69,11 @@ def map_from_orm(schema_klass: Type[BaseModel], db_entities):
 
 
 def update_db_entity(
-        db: Session,
-        entity_klass: Type[models.Base],
-        pk_value: Union[str, int],
-        data: BaseModel,
-        pk_field: str = "id",
+    db: Session,
+    entity_klass: Type[models.Base],
+    pk_value: Union[str, int],
+    data: BaseModel,
+    pk_field: str = "id",
 ):
     def mapper(item):
         return item.name
@@ -104,3 +107,13 @@ def validate_phone_number(phone_number: str):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=error_msg)
     except phonenumbers.phonenumberutil.NumberParseException as e:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=error_msg)
+
+
+def drop_tables(db):
+    engine = db.get_bind()
+    models.Base.metadata.drop_all(bind=engine)
+
+
+def create_tables(db):
+    engine = db.get_bind()
+    models.Base.metadata.create_all(bind=engine)
