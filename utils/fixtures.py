@@ -22,9 +22,6 @@ def setup_db_data():
     fake = setup_faker()
 
     with Session(engine) as db:
-        drop_tables(db)
-        create_tables(db)
-
         for i in range(1000):
             customer = Customer(
                 first_name=fake.first_name(),

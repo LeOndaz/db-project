@@ -14,6 +14,7 @@ from routers import (
     order_router,
     product_router,
 )
+from utils import clean_db
 from utils.auth import init_admin
 from utils.fixtures import setup_db_data
 
@@ -47,5 +48,8 @@ if __name__ == "__main__":
     if args.command == "refilldb":
         setup_db_data()
 
-    if args.command == "initadmin":
+    elif args.command == "initadmin":
         init_admin()
+
+    elif args.command == "flush":
+        clean_db()

@@ -10,6 +10,7 @@ from sqlalchemy import inspect
 from sqlalchemy.orm import Session
 
 import models
+from db import get_db
 
 
 def get_object_or_404(db: Session, entity_klass, field, value):
@@ -117,3 +118,10 @@ def drop_tables(db):
 def create_tables(db):
     engine = db.get_bind()
     models.Base.metadata.create_all(bind=engine)
+
+
+def clean_db():
+    db = next(get_db())
+
+    drop_tables(db)
+    create_tables(db)
