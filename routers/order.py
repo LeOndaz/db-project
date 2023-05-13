@@ -1,6 +1,6 @@
-from typing import List
+from typing import Annotated, List, Union
 
-from fastapi import Depends, Request
+from fastapi import Body, Depends, Request
 from fastapi.routing import APIRouter
 from sqlalchemy.orm import Session
 from starlette.authentication import requires
@@ -13,8 +13,10 @@ router = APIRouter(prefix="/orders", dependencies=[Depends(get_db)])
 
 
 @router.get("/")
-def get_orders(db: Session = Depends(get_db)) -> List[schemas.Order]:
-    return order_controllers.get_orders(db)
+def get_orders(
+    branch_id: Union[int, None] = None, db: Session = Depends(get_db)
+) -> List[schemas.Order]:
+    return order_controllers.get_orders(db, branch_id)
 
 
 @router.post("/")

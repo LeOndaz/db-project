@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from db import engine
 from models import Branch, Customer, CustomerInsurance, Insurance, Inventory
-from utils import get_db_entity_list
+from utils import create_tables, drop_tables, get_db_entity_list
 
 
 def setup_faker():
@@ -22,6 +22,9 @@ def setup_db_data():
     fake = setup_faker()
 
     with Session(engine) as db:
+        drop_tables(db)
+        create_tables(db)
+
         for i in range(1000):
             customer = Customer(
                 first_name=fake.first_name(),

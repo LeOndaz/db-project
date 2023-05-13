@@ -11,11 +11,11 @@ from routers import (
     customer_router,
     insurance_router,
     inventory_router,
-    misc_router,
     order_router,
     product_router,
 )
 from utils.auth import init_admin
+from utils.fixtures import setup_db_data
 
 Base.metadata.create_all(engine)
 
@@ -30,11 +30,22 @@ for router in [
     product_router,
     inventory_router,
     insurance_router,
-    misc_router,
     auth_router,
 ]:
     app.include_router(router)
 
-
 if __name__ == "__main__":
-    init_admin()
+    from argparse import ArgumentParser
+
+    parser = ArgumentParser()
+    subparsers = parser.add_subparsers(dest="command")
+    refill_db_parser = subparsers.add_parser("refilldb")
+    init_admin_parser = subparsers.add_parser("initadmin")
+
+    args = parser.parse_args()
+
+    if args.command == "refilldb":
+        setup_db_data()
+
+    if args.command == "initadmin":
+        init_admin()

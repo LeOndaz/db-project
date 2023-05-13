@@ -17,8 +17,13 @@ def get_order_by_id(db: Session, id) -> models.Order:
     return get_db_entity_by_id(db, models.Order, id)
 
 
-def get_orders(db: Session) -> List[models.Order]:
-    return get_db_entity_list(db, models.Order)
+def get_orders(db: Session, branch_id=None) -> List[models.Order]:
+    filters = {}
+
+    if branch_id:
+        filters["branch_id"] = branch_id
+
+    return get_db_entity_list(db, models.Order, **filters)
 
 
 def delete_order(db: Session, id) -> models.Order:
