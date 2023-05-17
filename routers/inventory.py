@@ -26,7 +26,9 @@ async def create_inventory(
 
 
 @router.get("/{id}")
-async def get_inventory_by_id(id: int, db: Session = Depends(get_db)) -> schemas.Inventory:
+async def get_inventory_by_id(
+    id: int, db: Session = Depends(get_db)
+) -> schemas.Inventory:
     return inventory_controllers.get_inventory_by_id(db, id)
 
 

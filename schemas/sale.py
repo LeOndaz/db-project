@@ -1,6 +1,6 @@
 from datetime import datetime
-from typing import Optional
 from decimal import Decimal
+from typing import Optional
 
 from pydantic import BaseModel, condecimal, conint, root_validator
 
@@ -17,8 +17,8 @@ class SaleCreate(BaseModel):
 
     @root_validator()
     def validate_starts_in_future(cls, values):
-        starts_at = values['starts_at']
-        ends_at = values['ends_at']
+        starts_at = values["starts_at"]
+        ends_at = values["ends_at"]
 
         if not starts_at < ends_at:
             raise ValueError("starts_at must be before ends_at")
@@ -27,14 +27,16 @@ class SaleCreate(BaseModel):
 
     @root_validator()
     def validate_on_of_amount_or_percentage(cls, values):
-        amount = values.get('amount')
-        percentage = values.get('percentage')
+        amount = values.get("amount")
+        percentage = values.get("percentage")
 
         if amount and percentage:
-            raise ValueError("amount and percentage are mutually exclusive. Please only provide one of them")
+            raise ValueError(
+                "amount and percentage are mutually exclusive. Please only provide one of them"
+            )
 
         if not amount and not percentage:
-            raise ValueError('amount or percentage are not provided')
+            raise ValueError("amount or percentage are not provided")
 
         return values
 

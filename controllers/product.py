@@ -32,13 +32,13 @@ def create_product(db: Session, data: schemas.ProductCreate) -> models.Product:
 
 
 def update_product_by_id(
-        db: Session, id: int, data: schemas.ProductUpdate
+    db: Session, id: int, data: schemas.ProductUpdate
 ) -> models.Product:
     return update_db_entity(db, models.Product, id, data)
 
 
 def add_insurance(
-        db: Session, product_id: int, data: schemas.ProductAddInsurance
+    db: Session, product_id: int, data: schemas.ProductAddInsurance
 ) -> models.Product:
     # product first, to avoid creating insurance and then throwing error bloating the db
     product = get_object_or_404(db, models.Product, "id", product_id)
@@ -86,12 +86,14 @@ def remove_insurance(db: Session, product_id: int, insurance_id: int) -> models.
 
 
 def add_sale(db: Session, product_id: int, data: SaleCreate):
-    assert data.percentage or data.amount, "Must either provide a percentage or an amount"
+    assert (
+        data.percentage or data.amount
+    ), "Must either provide a percentage or an amount"
 
-    product: models.Product = get_object_or_404(db, models.Product, 'id', product_id)
+    product: models.Product = get_object_or_404(db, models.Product, "id", product_id)
 
     if data.branch_id:
-        branch = get_object_or_404(db, models.Branch, 'id', data.branch_id)
+        branch = get_object_or_404(db, models.Branch, "id", data.branch_id)
     else:
         branch = None
 
@@ -110,11 +112,11 @@ def add_sale(db: Session, product_id: int, data: SaleCreate):
 
 
 def remove_sale(db: Session, product_id: int, sale_id: int):
-    product = get_object_or_404(db, models.Product, 'id', product_id)
+    product = get_object_or_404(db, models.Product, "id", product_id)
     delete_by_entity_by_id(db, models.Sale, schemas.Sale, sale_id)
     return product
 
 
 def get_sales(db: Session, product_id: int):
-    product: models.Product = get_object_or_404(db, models.Product, 'id', product_id)
+    product: models.Product = get_object_or_404(db, models.Product, "id", product_id)
     return product.sales

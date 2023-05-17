@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, DateTime, Numeric, ForeignKey
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, Numeric
 from sqlalchemy.orm import relationship
 
 from .base import Base
@@ -7,7 +7,10 @@ from .base import Base
 class Sale(Base):
     __tablename__ = "sales"
 
-    id = Column(Integer, primary_key=True, )
+    id = Column(
+        Integer,
+        primary_key=True,
+    )
 
     starts_at = Column(DateTime)
     ends_at = Column(DateTime)
@@ -19,6 +22,4 @@ class Sale(Base):
     branch_id = Column(ForeignKey("branches.id"), nullable=True)
 
     product_id = Column(ForeignKey("products.id"))
-    product = relationship(
-        "Product", back_populates="sales", cascade="all"
-    )
+    product = relationship("Product", back_populates="sales", cascade="all")

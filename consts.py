@@ -1,4 +1,3 @@
-
 import confik
 
 SECRET_KEY = confik.get("SECRET_KEY")

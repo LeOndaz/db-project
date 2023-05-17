@@ -26,7 +26,9 @@ async def create_insurance(
 
 
 @router.get("/{id}")
-async def get_insurance_by_id(id: int, db: Session = Depends(get_db)) -> schemas.Insurance:
+async def get_insurance_by_id(
+    id: int, db: Session = Depends(get_db)
+) -> schemas.Insurance:
     return insurance_controllers.get_insurance_by_id(db, id)
 
 

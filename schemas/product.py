@@ -1,11 +1,12 @@
 from datetime import date
 from decimal import Decimal
 from enum import Enum
-from typing import Optional, List
+from typing import List, Optional
 
 from pydantic import BaseModel, condecimal, validator
 
 from utils.enums import ProductType
+
 from .sale import Sale
 
 
