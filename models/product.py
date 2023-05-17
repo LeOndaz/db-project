@@ -27,3 +27,5 @@ class Product(Base):
     inventory_products = relationship(
         "InventoryProduct", back_populates="product", cascade="all"
     )
+
+    sales = relationship("Sale", back_populates="product")

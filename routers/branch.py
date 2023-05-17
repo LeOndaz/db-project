@@ -20,7 +20,7 @@ async def get_branches(db: Session = Depends(get_db)) -> List[schemas.Branch]:
 @router.post("/")
 @requires(["authenticated"])
 async def create_branch(
-    request: Request, data: schemas.BranchCreate, db: Session = Depends(get_db)
+        request: Request, data: schemas.BranchCreate, db: Session = Depends(get_db)
 ) -> schemas.Branch:
     return branch_controllers.create_branch(db, data)
 
@@ -33,7 +33,7 @@ async def get_branch_by_id(id: int, db: Session = Depends(get_db)) -> schemas.Br
 @router.put("/{id}")
 @requires(["authenticated"])
 async def update_branch_by_id(
-    request: Request, id: int, data: schemas.BranchUpdate, db: Session = Depends(get_db)
+        request: Request, id: int, data: schemas.BranchUpdate, db: Session = Depends(get_db)
 ) -> schemas.Branch:
     return branch_controllers.update_branch_by_id(db, id, data)
 
@@ -41,6 +41,11 @@ async def update_branch_by_id(
 @router.delete("/{id}")
 @requires(["authenticated"])
 async def delete_branch_by_id(
-    request: Request, id: int, db: Session = Depends(get_db)
+        request: Request, id: int, db: Session = Depends(get_db)
 ) -> schemas.Branch:
     return branch_controllers.delete_branch(db, id)
+
+
+@router.get("/{id}/sales")
+async def get_sales(id: int, db: Sesion = Depends(get_db)) -> List[schemas.Sale]:
+    return branch_controllers.get_sales_by_branch_id(db, id)

@@ -33,3 +33,10 @@ def update_branch_by_id(
     db: Session, id: int, data: schemas.BranchUpdate
 ) -> models.Branch:
     return update_db_entity(db, models.Branch, id, data)
+
+
+def get_sales_by_branch_id(
+        db: Session, branch_id: id
+):
+    branch = get_branch_by_id(db, branch_id)
+    return branch.sales

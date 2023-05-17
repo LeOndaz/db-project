@@ -6,3 +6,4 @@ from .inventory import Inventory, InventoryProduct
 from .order import Order, OrderLine
 from .product import Product
 from .user import User
+from .sale import Sale

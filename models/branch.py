@@ -18,3 +18,4 @@ class Branch(Base):
 
     orders = relationship("Order", back_populates="branch", cascade="all")
     inventories = relationship("Inventory", back_populates="branch", cascade="all")
+    sales = relationship("Sale", back_populates="branch")

@@ -16,3 +16,4 @@ from .inventory import (
 )
 from .order import Order, OrderCreate, OrderLine, OrderLineCreate, OrderUpdate
 from .product import Product, ProductCreate, ProductUpdate
+from .sale import Sale, SaleCreate

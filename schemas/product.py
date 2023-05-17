@@ -1,11 +1,12 @@
 from datetime import date
 from decimal import Decimal
 from enum import Enum
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel, condecimal, validator
 
 from utils.enums import ProductType
+from .sale import Sale
 
 
 class ProductTypeDisplay(str, Enum):
@@ -36,6 +37,7 @@ class ProductUpdate(BaseModel):
 class Product(ProductCreate):
     id: str
     type: ProductTypeDisplay
+    sales: List[Sale]
 
     @validator("type", pre=True)
     def validate_product_type(cls, value):
