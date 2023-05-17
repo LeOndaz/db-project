@@ -13,26 +13,26 @@ router = APIRouter(prefix="/products", dependencies=[Depends(get_db)])
 
 
 @router.get("/")
-def get_products(db: Session = Depends(get_db)) -> List[schemas.Product]:
+async def get_products(db: Session = Depends(get_db)) -> List[schemas.Product]:
     return product_controllers.get_products(db)
 
 
 @router.post("/")
 @requires(["authenticated"])
-def create_product(
+async def create_product(
         request: Request, data: schemas.ProductCreate, db: Session = Depends(get_db)
 ) -> schemas.Product:
     return product_controllers.create_product(db, data)
 
 
 @router.get("/{id}")
-def get_product_by_id(id: int, db: Session = Depends(get_db)) -> schemas.Product:
+async def get_product_by_id(id: int, db: Session = Depends(get_db)) -> schemas.Product:
     return product_controllers.get_product_by_id(db, id)
 
 
 @router.put("/{id}")
 @requires(["authenticated"])
-def update_product_by_id(
+async def update_product_by_id(
         request: Request,
         id: int,
         data: schemas.ProductUpdate,
@@ -42,13 +42,13 @@ def update_product_by_id(
 
 
 @router.get("/{id}/insurances")
-def get_insurances(id: int, db: Session = Depends(get_db)) -> List[schemas.Insurance]:
+async def get_insurances(id: int, db: Session = Depends(get_db)) -> List[schemas.Insurance]:
     return product_controllers.get_insurances(db, id)
 
 
 @router.post("/{id}/insurances")
 @requires(["authenticated"])
-def add_insurance(
+async def add_insurance(
         request: Request,
         id: int,
         data: schemas.ProductAddInsurance,
@@ -70,7 +70,7 @@ def delete_insurance(
 
 @router.delete("/{id}")
 @requires(["authenticated"])
-def delete_product_by_id(
+async def delete_product_by_id(
         request: Request, id: int, db: Session = Depends(get_db)
 ) -> schemas.Product:
     return product_controllers.delete_product(db, id)

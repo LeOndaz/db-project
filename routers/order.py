@@ -13,7 +13,7 @@ router = APIRouter(prefix="/orders", dependencies=[Depends(get_db)])
 
 
 @router.get("/")
-def get_orders(
+async def get_orders(
     branch_id: Union[int, None] = None, db: Session = Depends(get_db)
 ) -> List[schemas.Order]:
     return order_controllers.get_orders(db, branch_id)
@@ -21,20 +21,20 @@ def get_orders(
 
 @router.post("/")
 @requires(["authenticated"])
-def create_order(
+async def create_order(
     request: Request, data: schemas.OrderCreate, db: Session = Depends(get_db)
 ) -> schemas.Order:
     return order_controllers.create_order(db, data)
 
 
 @router.get("/{id}")
-def get_order_by_id(id: int, db: Session = Depends(get_db)) -> schemas.Order:
+async def get_order_by_id(id: int, db: Session = Depends(get_db)) -> schemas.Order:
     return order_controllers.get_order_by_id(db, id)
 
 
 @router.put("/{id}")
 @requires(["authenticated"])
-def update_order_by_id(
+async def update_order_by_id(
     request: Request, id: int, data: schemas.OrderUpdate, db: Session = Depends(get_db)
 ) -> schemas.Order:
     return order_controllers.update_order_by_id(db, id, data)
@@ -42,7 +42,7 @@ def update_order_by_id(
 
 @router.delete("/{id}")
 @requires(["authenticated"])
-def delete_order_by_id(
+async def delete_order_by_id(
     request: Request, id: int, db: Session = Depends(get_db)
 ) -> schemas.Order:
     return order_controllers.delete_order(db, id)
