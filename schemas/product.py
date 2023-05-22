@@ -20,7 +20,7 @@ class ProductCreate(BaseModel):
     price: condecimal(gt=Decimal(0))
     expiration_date: date
     barcode: str
-    type: Optional[ProductTypeDisplay]
+    type: Optional[ProductTypeDisplay] = "DRUG"
 
     @validator("type")
     def validate_product_type(cls, value):
@@ -43,7 +43,7 @@ class Product(ProductCreate):
     @validator("type", pre=True)
     def validate_product_type(cls, value):
         for member_name, member_value in ProductTypeDisplay.__members__.items():
-            if value == member_value:
+            if value.name == member_value.name:
                 return member_name
 
     class Config:
