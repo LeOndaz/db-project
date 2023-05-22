@@ -63,6 +63,7 @@ def init_admin(branch_id):
         username=ADMIN_USERNAME,
         email="admin@admin.com",
         is_staff=True,
+        branch_id=branch_id
     )
     user.password = hash_password(ADMIN_PASSWORD)
     db.add(user)
