@@ -9,7 +9,7 @@ from utils import (
     get_db_entity_by_id,
     get_db_entity_list,
     get_object_or_404,
-    update_db_entity,
+    update_db_entity, get_order_total,
 )
 
 
@@ -47,8 +47,10 @@ def create_order(db: Session, data: schemas.OrderCreate) -> models.Order:
         )
         lines.append(line)
 
+    order.price = get_order_total(customer, lines)
     db.add_all(lines)
     db.commit()
+
     db.refresh(order)
 
     return order

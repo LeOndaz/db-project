@@ -125,3 +125,16 @@ def clean_db():
 
     drop_tables(db)
     create_tables(db)
+
+
+def get_order_total(customer, lines):
+    total = 0
+
+    for line in lines:
+        total += line.product.price
+
+    for customer_insurance in customer.customer_insurances:
+        insurance = customer_insurance.insurance
+        total = total - (total * insurance.discount_percentage)
+
+    return total

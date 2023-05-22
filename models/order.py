@@ -10,6 +10,8 @@ class Order(Base):
     __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True, index=True)
+
+    price = Column(Numeric(12, 3), nullable=True)
     amount_paid = Column(Numeric(12, 3), nullable=True)
 
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -21,14 +23,6 @@ class Order(Base):
     customer_id = Column(ForeignKey("customers.id"))
 
     lines = relationship("OrderLine", back_populates="order", cascade="all")
-
-    def get_total(self):
-        total = 0
-
-        for line in self.lines:
-            total += line.product.price
-
-        return total
 
 
 class OrderLine(Base):
