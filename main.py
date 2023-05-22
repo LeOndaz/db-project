@@ -42,6 +42,7 @@ if __name__ == "__main__":
     subparsers = parser.add_subparsers(dest="command")
     refill_db_parser = subparsers.add_parser("refilldb")
     init_admin_parser = subparsers.add_parser("initadmin")
+    init_admin_parser.add_argument('-b', '--branch_id', type=int, default=None)
 
     args = parser.parse_args()
 
@@ -49,7 +50,7 @@ if __name__ == "__main__":
         setup_db_data()
 
     elif args.command == "initadmin":
-        init_admin()
+        init_admin(args.branch_id)
 
     elif args.command == "flush":
         clean_db()

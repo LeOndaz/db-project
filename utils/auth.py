@@ -57,7 +57,7 @@ def decode_jwt(token):
     return jwt.decode(token, SECRET_KEY, JWT_ALGORITHM)
 
 
-def init_admin():
+def init_admin(branch_id):
     db = next(get_db())
     user = models.User(
         username=ADMIN_USERNAME,
