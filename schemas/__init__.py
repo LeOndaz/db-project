@@ -1,5 +1,5 @@
 from .branch import Branch, BranchCreate, BranchUpdate
-from .customer import Customer, CustomerCreate, CustomerUpdate
+from .customer import Customer, CustomerCreate, CustomerUpdate, CustomerAddInsurance, CustomerRemoveInsurance
 from .insurance import (
     Insurance,
     InsuranceCreate,

@@ -47,3 +47,32 @@ async def delete_customer_by_id(
         request: Request, id: int, db: Session = Depends(get_db)
 ) -> schemas.Customer:
     return customer_controllers.delete_customer(db, id)
+
+
+@router.get("/{id}/insurances")
+async def get_insurances(
+    id: int, db: Session = Depends(get_db)
+) -> List[schemas.Insurance]:
+    return customer_controllers.get_insurances(db, id)
+
+
+@router.post("/{id}/insurances")
+@requires(["authenticated"])
+async def add_insurance(
+    request: Request,
+    id: int,
+    data: schemas.CustomerAddInsurance,
+    db: Session = Depends(get_db),
+) -> schemas.Customer:
+    return customer_controllers.add_insurance(db, id, data)
+
+
+@router.delete("/{id}/insurances")
+@requires(["authenticated"])
+def delete_insurance(
+    request: Request,
+    id: int,
+    data: schemas.CustomerRemoveInsurance,
+    db: Session = Depends(get_db),
+) -> schemas.Customer:
+    return customer_controllers.remove_insurance(db, id, insurance_id=data.insurance_id)

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator, conint
 
 from utils import validate_phone_number
 
@@ -36,3 +36,12 @@ class Customer(CustomerCreate):
 
     class Config:
         orm_mode = True
+
+
+class CustomerAddInsurance(BaseModel):
+    name: str
+    discount_percentage: conint(gt=0)
+
+
+class CustomerRemoveInsurance(BaseModel):
+    insurance_id: int
