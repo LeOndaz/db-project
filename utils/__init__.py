@@ -43,7 +43,7 @@ def get_db_entity_by_id(db: Session, entity_klass, id):
 
 
 def delete_by_entity_by_id(
-    db: Session, entity_klass, schema_class: Type[BaseModel], id
+        db: Session, entity_klass, schema_class: Type[BaseModel], id
 ):
     instance = get_object_or_404(db, entity_klass, "id", id)
 
@@ -56,8 +56,8 @@ def delete_by_entity_by_id(
     return data
 
 
-def get_db_entity_list(db: Session, entity_klass, **filters):
-    return db.query(entity_klass).filter_by(**filters).all()
+def get_db_entity_list(db: Session, entity_klass, limit=100, offset=0, **filters):
+    return db.query(entity_klass).filter_by(**filters).limit(limit).offset(offset)
 
 
 def from_orm(schema_klass: Type[BaseModel], db_entity):
@@ -70,11 +70,11 @@ def map_from_orm(schema_klass: Type[BaseModel], db_entities):
 
 
 def update_db_entity(
-    db: Session,
-    entity_klass: Type[models.Base],
-    pk_value: Union[str, int],
-    data: BaseModel,
-    pk_field: str = "id",
+        db: Session,
+        entity_klass: Type[models.Base],
+        pk_value: Union[str, int],
+        data: BaseModel,
+        pk_field: str = "id",
 ):
     def mapper(item):
         return item.name

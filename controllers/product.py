@@ -19,8 +19,8 @@ def get_product_by_id(db: Session, id) -> models.Product:
     return get_db_entity_by_id(db, models.Product, id)
 
 
-def get_products(db: Session) -> List[models.Product]:
-    return get_db_entity_list(db, models.Product)
+def get_products(db: Session, limit=100, offset=0) -> List[models.Product]:
+    return get_db_entity_list(db, models.Product, limit, offset)
 
 
 def delete_product(db: Session, id) -> models.Product:
@@ -32,13 +32,13 @@ def create_product(db: Session, data: schemas.ProductCreate) -> models.Product:
 
 
 def update_product_by_id(
-    db: Session, id: int, data: schemas.ProductUpdate
+        db: Session, id: int, data: schemas.ProductUpdate
 ) -> models.Product:
     return update_db_entity(db, models.Product, id, data)
 
 
 def add_insurance(
-    db: Session, product_id: int, data: schemas.ProductAddInsurance
+        db: Session, product_id: int, data: schemas.ProductAddInsurance
 ) -> models.Product:
     # product first, to avoid creating insurance and then throwing error bloating the db
     product = get_object_or_404(db, models.Product, "id", product_id)
@@ -87,7 +87,7 @@ def remove_insurance(db: Session, product_id: int, insurance_id: int) -> models.
 
 def add_sale(db: Session, product_id: int, data: SaleCreate):
     assert (
-        data.percentage or data.amount
+            data.percentage or data.amount
     ), "Must either provide a percentage or an amount"
 
     product: models.Product = get_object_or_404(db, models.Product, "id", product_id)
