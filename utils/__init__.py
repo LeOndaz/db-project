@@ -57,7 +57,7 @@ def delete_by_entity_by_id(
 
 
 def get_db_entity_list(db: Session, entity_klass, limit=100, offset=0, **filters):
-    return db.query(entity_klass).filter_by(**filters).limit(limit).offset(offset)
+    return db.query(entity_klass).filter_by(**filters).limit(limit).offset(offset).all()
 
 
 def from_orm(schema_klass: Type[BaseModel], db_entity):
