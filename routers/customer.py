@@ -13,14 +13,14 @@ router = APIRouter(prefix="/customers", dependencies=[Depends(get_db)])
 
 
 @router.get("/")
-async def get_customers(db: Session = Depends(get_db)) -> List[schemas.Customer]:
-    return customer_controllers.get_customers(db)
+async def get_customers(db: Session = Depends(get_db), limit: int = 100, offset: int = 0) -> List[schemas.Customer]:
+    return customer_controllers.get_customers(db, limit, offset)
 
 
 @router.post("/")
 @requires(["authenticated"])
 async def create_customer(
-    request: Request, data: schemas.CustomerCreate, db: Session = Depends(get_db)
+        request: Request, data: schemas.CustomerCreate, db: Session = Depends(get_db)
 ) -> schemas.Customer:
     return customer_controllers.create_customer(db, data)
 
@@ -33,10 +33,10 @@ def get_customer_by_id(id: int, db: Session = Depends(get_db)) -> schemas.Custom
 @router.put("/{id}")
 @requires(["authenticated"])
 async def update_customer_by_id(
-    request: Request,
-    id: int,
-    data: schemas.CustomerUpdate,
-    db: Session = Depends(get_db),
+        request: Request,
+        id: int,
+        data: schemas.CustomerUpdate,
+        db: Session = Depends(get_db),
 ) -> schemas.Customer:
     return customer_controllers.update_customer_by_id(db, id, data)
 
@@ -44,6 +44,6 @@ async def update_customer_by_id(
 @router.delete("/{id}")
 @requires(["authenticated"])
 async def delete_customer_by_id(
-    request: Request, id: int, db: Session = Depends(get_db)
+        request: Request, id: int, db: Session = Depends(get_db)
 ) -> schemas.Customer:
     return customer_controllers.delete_customer(db, id)

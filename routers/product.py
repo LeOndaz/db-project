@@ -13,7 +13,7 @@ router = APIRouter(prefix="/products", dependencies=[Depends(get_db)])
 
 
 @router.get("/")
-async def get_products(db: Session = Depends(get_db), limit: int = 100, offset: int = 0) -> List[schemas.Product]:
+async def get_products(db: Session = Depends(get_db), limit=None, offset=None) -> List[schemas.Product]:
     return product_controllers.get_products(db, limit, offset)
 
 

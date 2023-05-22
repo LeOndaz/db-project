@@ -17,8 +17,8 @@ def get_customer_by_id(db: Session, id) -> models.Customer:
     return get_db_entity_by_id(db, models.Customer, id)
 
 
-def get_customers(db: Session) -> List[models.Customer]:
-    return get_db_entity_list(db, models.Customer)
+def get_customers(db: Session, limit: int, offset: int) -> List[models.Customer]:
+    return get_db_entity_list(db, models.Customer, limit, offset)
 
 
 def delete_customer(db: Session, id) -> models.Customer:
@@ -30,6 +30,6 @@ def create_customer(db: Session, data: schemas.CustomerCreate) -> models.Custome
 
 
 def update_customer_by_id(
-    db: Session, id: int, data: schemas.CustomerUpdate
+        db: Session, id: int, data: schemas.CustomerUpdate
 ) -> models.Customer:
     return update_db_entity(db, models.Customer, id, data)
