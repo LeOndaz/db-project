@@ -36,7 +36,7 @@ class OrderUpdate(BaseModel):
 
 class Order(BaseModel):
     id: str
-    price: Decimal
+    price: Optional[Decimal]
     amount_paid: Union[Decimal, None]
     created_at: datetime
 
