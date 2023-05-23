@@ -22,7 +22,7 @@ class BranchUpdate(BaseModel):
 
 
 class Branch(BranchCreate):
-    id: str
+    id: int
 
     class Config:
         orm_mode = True
