@@ -14,9 +14,9 @@ router = APIRouter(prefix="/orders", dependencies=[Depends(get_db)])
 
 @router.get("/")
 async def get_orders(
-    branch_id: Union[int, None] = None, db: Session = Depends(get_db)
+    branch_id: Union[int, None] = None, limit: int = 100, offset: int = 0, db: Session = Depends(get_db)
 ) -> List[schemas.Order]:
-    return order_controllers.get_orders(db, branch_id)
+    return order_controllers.get_orders(db, limit, offset, branch_id)
 
 
 @router.post("/")
