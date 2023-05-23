@@ -36,7 +36,7 @@ class ProductUpdate(BaseModel):
 
 
 class Product(ProductCreate):
-    id: str
+    id: int
     type: ProductTypeDisplay
     sales: List[Sale]
 
