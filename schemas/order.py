@@ -36,8 +36,8 @@ class OrderUpdate(BaseModel):
 
 class Order(BaseModel):
     id: str
-    price: condecimal(gt=Decimal(0))
-    amount_paid: Union[condecimal(gt=Decimal(0)), None]
+    price: Decimal
+    amount_paid: Union[Decimal, None]
     created_at: datetime
 
     branch: Branch

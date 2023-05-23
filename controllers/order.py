@@ -49,6 +49,7 @@ def create_order(db: Session, data: schemas.OrderCreate) -> models.Order:
 
     order.price = get_order_total(customer, lines)
     db.add_all(lines)
+    db.add(order)
     db.commit()
 
     db.refresh(order)
