@@ -135,6 +135,6 @@ def get_order_total(customer, lines):
 
     for customer_insurance in customer.customer_insurances:
         insurance = customer_insurance.insurance
-        total = total - (total * insurance.discount_percentage)
+        total = total - (total * insurance.discount_percentage / 100)
 
     return total
