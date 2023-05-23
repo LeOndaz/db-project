@@ -6,7 +6,7 @@ import sqlalchemy.exc
 from fastapi import status
 from fastapi.exceptions import HTTPException
 from pydantic import BaseModel
-from sqlalchemy import inspect
+from sqlalchemy import inspect, desc
 from sqlalchemy.orm import Session
 
 import models
@@ -57,7 +57,7 @@ def delete_by_entity_by_id(
 
 
 def get_db_entity_list(db: Session, entity_klass, limit=100, offset=0, **filters):
-    return db.query(entity_klass).filter_by(**filters).limit(limit).offset(offset).all()
+    return db.query(entity_klass).filter_by(**filters).order_by(desc(getattr(entity_klass, 'id'))).limit(limit).offset(offset).all()
 
 
 def from_orm(schema_klass: Type[BaseModel], db_entity):
